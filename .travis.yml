@@ -1,0 +1,4 @@
+sudo: false
+language: csharp
+script:
+  - ./build-all.sh
