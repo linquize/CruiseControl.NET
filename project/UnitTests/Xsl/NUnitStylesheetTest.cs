@@ -1,4 +1,5 @@
 using NUnit.Framework;
+using System.IO;
 using System.Xml.Linq;
 
 namespace ThoughtWorks.CruiseControl.UnitTests.Xsl
@@ -8,7 +9,7 @@ namespace ThoughtWorks.CruiseControl.UnitTests.Xsl
 	{
 		protected override string Stylesheet
 		{
-			get { return @"xsl\tests.xsl"; }
+			get { return Path.Combine("xsl", "tests.xsl"); }
 		}
 
 		[Test]

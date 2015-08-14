@@ -440,7 +440,7 @@ namespace ThoughtWorks.CruiseControl.UnitTests.Core.Config
 
                 Assert.AreEqual(env.Fileset.Length, 3);
                 Assert.AreEqual(GetTestPath("TestIncludeVariable.xml"), env.Fileset[0].LocalPath);
-                Assert.AreEqual(GetTestPath(@"Subfolder\TestIncluded.xml"), env.Fileset[1].LocalPath);
+                Assert.AreEqual(GetTestPath(Path.Combine("Subfolder", "TestIncluded.xml")), env.Fileset[1].LocalPath);
                 Assert.AreEqual(GetTestPath("TestIncluded2.xml"), env.Fileset[2].LocalPath);
             }
         }
