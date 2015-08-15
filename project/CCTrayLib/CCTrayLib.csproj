@@ -143,7 +143,7 @@
     <Reference Include="System.Drawing">
       <Name>System.Drawing</Name>
     </Reference>
-    <Reference Include="System.Speech">
+    <Reference Include="System.Speech" Condition="$(DISABLE_COM) != true">
       <RequiredTargetFramework>3.0</RequiredTargetFramework>
     </Reference>
     <Reference Include="System.Windows.Forms">
