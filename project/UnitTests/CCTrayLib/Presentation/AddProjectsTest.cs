@@ -33,8 +33,8 @@ namespace ThoughtWorks.CruiseControl.UnitTests.CCTrayLib.Presentation
 		public void TheServerListBoxIsPopulatedInAlphabeticalOrder()
 		{
 			CCTrayProject[] projects = {
-			                     	new CCTrayProject("tcp://b:123/blah", "proj1"),
-			                     	new CCTrayProject("tcp://a:123/blah", "proj2"),
+			                     	new CCTrayProject("tcp://bb:123/blah", "proj1"),
+			                     	new CCTrayProject("tcp://aa:123/blah", "proj2"),
 			                     };
 
             AddProjects addProjects = new AddProjects(null, null, projects);

@@ -26,14 +26,12 @@ namespace ThoughtWorks.CruiseControl.UnitTests.Core.Tasks
 			var shadowCopier = mocks.DynamicMock<IShadowCopier>();
 			SetupResult.For(shadowCopier.RetrieveFilePath(defaultLogger)).Return(defaultLogger);
 
-			var executionEnvironment = mocks.DynamicMock<IExecutionEnvironment>();
-			SetupResult.For(executionEnvironment.IsRunningOnWindows).Return(true);
-			SetupResult.For(executionEnvironment.RuntimeDirectory).Return(RuntimeEnvironment.GetRuntimeDirectory());
+			var executionEnvironment = new ExecutionEnvironment();
 
 			mocks.ReplayAll();
 
 
-			CreateProcessExecutorMock(Path.Combine(RuntimeEnvironment.GetRuntimeDirectory(), "MSBuild.exe"));
+			CreateProcessExecutorMock(executionEnvironment.IsRunningOnWindows ? Path.Combine(RuntimeEnvironment.GetRuntimeDirectory(), "MSBuild.exe") : "xbuild");
 			task = new MsBuildTask((ProcessExecutor) mockProcessExecutor.MockInstance, executionEnvironment, shadowCopier);
 
 			result = IntegrationResult();

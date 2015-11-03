@@ -1,3 +1,4 @@
+using System.IO;
 using NMock;
 using NUnit.Framework;
 using ThoughtWorks.CruiseControl.Core;
@@ -35,7 +36,7 @@ namespace ThoughtWorks.CruiseControl.UnitTests.Core
 
 			IIntegrationResult result = manager.StartNewIntegration(ForceBuildRequest());
 			Assert.AreEqual("project", result.ProjectName);
-			Assert.AreEqual(@"c:\temp", result.WorkingDirectory);
+			Assert.AreEqual(Path.GetTempPath(), result.WorkingDirectory);
 			Assert.AreEqual(BuildCondition.ForceBuild, result.BuildCondition);
 			Assert.AreEqual("success", result.Label);
 			Assert.AreEqual(project.ArtifactDirectory, result.ArtifactDirectory);
@@ -178,7 +179,7 @@ namespace ThoughtWorks.CruiseControl.UnitTests.Core
 		{	
 			project = new Project();
 			project.Name = "project";
-			project.ConfiguredWorkingDirectory = @"c:\temp";
+			project.ConfiguredWorkingDirectory = Path.GetTempPath();
 			project.StateManager = (IStateManager) mockStateManager.MockInstance;
 			project.ConfiguredArtifactDirectory = project.ConfiguredWorkingDirectory;            
 			return project;

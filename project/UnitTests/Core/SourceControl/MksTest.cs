@@ -106,10 +106,10 @@ namespace ThoughtWorks.CruiseControl.UnitTests.Core.Sourcecontrol
 		public void GetSource()
 		{
             string expectedResyncCommand = string.Format(@"resync --overwriteChanged --restoreTimestamp --forceConfirm=yes --includeDropped -R -S {0} --user=CCNetUser --password=CCNetPassword --quiet", 
-                GeneratePath(@"{0}\myproject.pj", sandboxRoot));
+                GeneratePath(sandboxRoot, "myproject.pj"));
 			mockExecutorWrapper.ExpectAndReturn("Execute", new ProcessResult(null, null, 0, false), ExpectedProcessInfo(expectedResyncCommand));
 			string expectedAttribCommand = string.Format(@"-R /s {0}", 
-                GeneratePath(@"{0}\*", sandboxRoot));
+                GeneratePath(sandboxRoot, "*"));
 			mockExecutorWrapper.ExpectAndReturn("Execute", new ProcessResult(null, null, 0, false), ExpectedProcessInfo("attrib", expectedAttribCommand));
 
 			string expectedDisconnectCommand = string.Format(@"disconnect --user=CCNetUser --password=CCNetPassword --quiet --forceConfirm=yes");
@@ -141,7 +141,7 @@ namespace ThoughtWorks.CruiseControl.UnitTests.Core.Sourcecontrol
 		[Test]
 		public void CheckpointSourceOnSuccessfulBuild()
 		{
-            string path = GeneratePath(@"{0}\myproject.pj", sandboxRoot);
+            string path = GeneratePath(sandboxRoot, "myproject.pj");
 			string expectedCommand = string.Format(@"checkpoint -d ""Cruise Control.Net Build - 20"" -L ""Build - 20"" -R -S {0} --user=CCNetUser --password=CCNetPassword --quiet", path);
 			ProcessInfo expectedProcessInfo = ExpectedProcessInfo(expectedCommand);
 			mockExecutorWrapper.ExpectAndReturn("Execute", new ProcessResult(null, null, 0, false), expectedProcessInfo);
@@ -178,7 +178,7 @@ namespace ThoughtWorks.CruiseControl.UnitTests.Core.Sourcecontrol
 			mksHistoryParserWrapper.ExpectNoCall("ParseMemberInfoAndAddToModification", new Type[] {(typeof (Modification)), typeof (StringReader)});
 			
             ProcessInfo expectedProcessInfo = ExpectedProcessInfo(string.Format(@"viewsandbox --nopersist --filter=changed:all --xmlapi -R -S {0} --user=CCNetUser --password=CCNetPassword --quiet", 
-                GeneratePath(@"{0}\myproject.pj", sandboxRoot)));
+                GeneratePath(sandboxRoot, @"myproject.pj")));
 			mockExecutorWrapper.ExpectAndReturn("Execute", new ProcessResult(null, null, 0, false), expectedProcessInfo);
 			
 			string expectedDisconnectCommand = string.Format(@"disconnect --user=CCNetUser --password=CCNetPassword --quiet --forceConfirm=yes");
@@ -201,7 +201,7 @@ namespace ThoughtWorks.CruiseControl.UnitTests.Core.Sourcecontrol
 			mockExecutorWrapper.ExpectAndReturn("Execute", new ProcessResult("", null, 0, false), new IsTypeOf(typeof (ProcessInfo)));
 
             string expectedCommand = string.Format(@"memberinfo --xmlapi --user=CCNetUser --password=CCNetPassword --quiet {0}", 
-                GeneratePath(@"{0}\MyFolder\myFile.file", sandboxRoot));
+                GeneratePath(sandboxRoot, "MyFolder", "myFile.file"));
 			ProcessInfo expectedProcessInfo = ExpectedProcessInfo(expectedCommand);
 			mockExecutorWrapper.ExpectAndReturn("Execute", new ProcessResult(null, null, 0, false), expectedProcessInfo);
 			
@@ -227,7 +227,7 @@ namespace ThoughtWorks.CruiseControl.UnitTests.Core.Sourcecontrol
 			mockExecutorWrapper.ExpectAndReturn("Execute", new ProcessResult("", null, 0, false), new IsTypeOf(typeof (ProcessInfo)));
 
 			string expectedCommand = string.Format(@"memberinfo --xmlapi --user=CCNetUser --password=CCNetPassword --quiet {0}", 
-                GeneratePath(@"{0}\myFile.file", sandboxRoot));
+                GeneratePath(sandboxRoot, @"myFile.file"));
 			ProcessInfo expectedProcessInfo = ExpectedProcessInfo(expectedCommand);
 			mockExecutorWrapper.ExpectAndReturn("Execute", new ProcessResult(null, null, 0, false), expectedProcessInfo);
 
@@ -305,7 +305,6 @@ namespace ThoughtWorks.CruiseControl.UnitTests.Core.Sourcecontrol
         /// <summary>
         /// Path generation hack to text whether the desired path contains spaces.
         /// </summary>
-        /// <param name="path"></param>
         /// <param name="args"></param>
         /// <returns></returns>
         /// <remarks>
@@ -313,9 +312,9 @@ namespace ThoughtWorks.CruiseControl.UnitTests.Core.Sourcecontrol
         /// other don't (e.g. WinVista). Previously the unit tests would fail between the different
         /// environments just because of this.
         /// </remarks>
-        private string GeneratePath(string path, params string[] args)
+        private string GeneratePath(params string[] args)
         {
-            string basePath = string.Format(path, args);
+            string basePath = Path.Combine(args);
             if (basePath.Contains(" ")) basePath = "\"" + basePath + "\"";
             return basePath;
         }

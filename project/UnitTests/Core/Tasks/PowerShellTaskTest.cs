@@ -112,7 +112,7 @@ namespace ThoughtWorks.CruiseControl.UnitTests.Core.Tasks
             PowerShellTask task = new PowerShellTask((IRegistry)mockRegistry2.MockInstance, (ProcessExecutor)mockProcessExecutor.MockInstance);
             mockRegistry2.ExpectAndReturn("GetLocalMachineSubKeyValue", null, PowerShellTask.regkeypowershell2, PowerShellTask.regkeyholder);
             mockRegistry2.ExpectAndReturn("GetLocalMachineSubKeyValue", null, PowerShellTask.regkeypowershell1, PowerShellTask.regkeyholder);
-            Assert.AreEqual(POWERSHELL1_PATH + "\\powershell.exe", task.Executable);
+            Assert.AreEqual(Path.Combine(POWERSHELL1_PATH, "powershell.exe"), task.Executable);
             mockRegistry2.Verify();
             mockProcessExecutor.Verify();
         }  
@@ -125,7 +125,7 @@ namespace ThoughtWorks.CruiseControl.UnitTests.Core.Tasks
             PowerShellTask task = new PowerShellTask((IRegistry)mockRegistry2.MockInstance, (ProcessExecutor)mockProcessExecutor.MockInstance);
             mockRegistry2.ExpectAndReturn("GetLocalMachineSubKeyValue", POWERSHELL2_PATH, 
                                         PowerShellTask.regkeypowershell2,PowerShellTask.regkeyholder);
-            Assert.AreEqual(POWERSHELL2_PATH + "\\powershell.exe", task.Executable);
+            Assert.AreEqual(Path.Combine(POWERSHELL2_PATH, "powershell.exe"), task.Executable);
             mockRegistry2.Verify();
             mockProcessExecutor.Verify();
         }           

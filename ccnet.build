@@ -209,9 +209,9 @@
 -->
 		<exec program="${nunit.executable}" >
                         <arg value="${path::combine( path::combine(build.dir, 'UnitTests'), 'ThoughtWorks.CruiseControl.UnitTests.dll')}" />
-                        <arg value="/result=${path::combine(build.metrics.dir, 'nunit-result.xml')}" />
-                        <arg value="/exclude=Integration" />
-						<arg value="/framework:v4.0" />
+                        <arg value="--result=${path::combine(build.metrics.dir, 'nunit-result.xml')}" />
+                        <arg value="--exclude=Integration" />
+						<arg value="--framework=v4.0" />
         </exec>
  
 		

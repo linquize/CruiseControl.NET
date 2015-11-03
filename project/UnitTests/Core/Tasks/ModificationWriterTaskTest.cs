@@ -1,3 +1,4 @@
+using System.IO;
 using Exortech.NetReflector;
 using NMock;
 using NMock.Constraints;
@@ -126,7 +127,7 @@ namespace ThoughtWorks.CruiseControl.UnitTests.Core.Tasks
 		[Test]
 		public void ShouldWriteXmlUsingUTF8Encoding()
 		{
-			mockIO.Expect("Save", @"artifactDir\modifications.xml", new StartsWith("<?xml version=\"1.0\" encoding=\"utf-8\"?>"));
+			mockIO.Expect("Save", Path.Combine("artifactDir", "modifications.xml"), new StartsWith("<?xml version=\"1.0\" encoding=\"utf-8\"?>"));
 
 			IntegrationResult result = IntegrationResultMother.CreateSuccessful();
 			result.ArtifactDirectory = "artifactDir";
