@@ -32,10 +32,10 @@ namespace ThoughtWorks.CruiseControl.UnitTests.Core.Config
             AssertNodeExists(nav, "/root/test-two/outer-content/nodeset-content");
         }
 
-        [Test, ExpectedException(typeof(InvalidMarkupException))]
+        [Test]
         public void TestAttributeWithNoName()
         {
-            _Preprocess("TestInvalidAttribute2.xml");
+            Assert.Throws(typeof(InvalidMarkupException), () => _Preprocess("TestInvalidAttribute2.xml"));
         }
 
         [Test]
@@ -110,7 +110,7 @@ namespace ThoughtWorks.CruiseControl.UnitTests.Core.Config
             AssertNodeValue(nav, "/root/@foo", "foo_val");
         }
 
-        [Test, ExpectedException(typeof(ExplicitDefinitionRequiredException))]
+        [Test]
         public void TestExplicitDefine2()
         {
             var settings = new PreprocessorSettings();
@@ -118,7 +118,7 @@ namespace ThoughtWorks.CruiseControl.UnitTests.Core.Config
             {
                 Environment.SetEnvironmentVariable("foo", "foo_val");
                 settings.ExplicitDeclarationRequired = true;
-                _Preprocess("TestExplicitDefine.xml", settings);
+                Assert.Throws(typeof(ExplicitDefinitionRequiredException), () => _Preprocess("TestExplicitDefine.xml", settings));
             }
             finally
             {
@@ -205,7 +205,7 @@ namespace ThoughtWorks.CruiseControl.UnitTests.Core.Config
             AssertNodeValue(nav, "/root/@foo", "foo_val");
         }
 
-        [Test, ExpectedException(typeof(ExplicitDefinitionRequiredException))]
+        [Test]
         public void TestInitialDefine2()
         {
             var settings = new PreprocessorSettings();
@@ -213,15 +213,17 @@ namespace ThoughtWorks.CruiseControl.UnitTests.Core.Config
             defs["foo"] = "foo_val";
             settings.InitialDefinitions = defs;
             settings.ExplicitDeclarationRequired = true;
-            XmlDocument doc = _Preprocess("TestExplicitDefine.xml", settings);
-            XPathNavigator nav = doc.CreateNavigator();
-            AssertNodeValue(nav, "/root/@foo", "foo_val");
+            Assert.Throws(typeof(ExplicitDefinitionRequiredException), () => {
+                XmlDocument doc = _Preprocess("TestExplicitDefine.xml", settings);
+                XPathNavigator nav = doc.CreateNavigator();
+                AssertNodeValue(nav, "/root/@foo", "foo_val");
+            });
         }
 
-        [Test, ExpectedException(typeof(InvalidMarkupException))]
+        [Test]
         public void TestMisplacedAttribute()
         {
-            _Preprocess("TestInvalidAttribute.xml");
+            Assert.Throws(typeof(InvalidMarkupException), () => _Preprocess("TestInvalidAttribute.xml"));
         }
         
 
@@ -351,7 +353,7 @@ namespace ThoughtWorks.CruiseControl.UnitTests.Core.Config
             }
         }
 
-        [Test, ExpectedException(typeof(MissingIncludeException))]
+        [Test]
         public void TestMissingIncludeFile()
         {
             string filename = "TestMissingIncludeFile.xml";
@@ -360,10 +362,11 @@ namespace ThoughtWorks.CruiseControl.UnitTests.Core.Config
                 using (XmlWriter output = GetOutput())
                 {
                     ConfigPreprocessor preprocessor = new ConfigPreprocessor();
-                    preprocessor.PreProcess(
+                    Assert.Throws(typeof(MissingIncludeException),
+                        () => preprocessor.PreProcess(
                         input, output, 
                         new FileNotFoundTestResolver(FAKE_ROOT + filename), 
-                        new Uri(FAKE_ROOT + filename));
+                        new Uri(FAKE_ROOT + filename)));
                 }
             }
         }
@@ -378,10 +381,10 @@ namespace ThoughtWorks.CruiseControl.UnitTests.Core.Config
             AssertNodeValue( doc, "/root/inner/test[2]", "val2_redef" );
         }
 
-        [Test,ExpectedException(typeof(CyclicalEvaluationException))]        
+        [Test]
         public void TestCycle()
         {            
-            _Preprocess( "TestCycle.xml" );            
+            Assert.Throws(typeof(CyclicalEvaluationException), () => _Preprocess("TestCycle.xml"));
         }
 
         [Test]

@@ -1,5 +1,6 @@
 using Exortech.NetReflector;
 using NUnit.Framework;
+using ThoughtWorks.CruiseControl.Core.Config;
 using ThoughtWorks.CruiseControl.Core.Label;
 
 namespace ThoughtWorks.CruiseControl.UnitTests.Core.Label
@@ -261,19 +262,18 @@ namespace ThoughtWorks.CruiseControl.UnitTests.Core.Label
 
 
         [Test]
-        [ExpectedException(ExpectedMessage = "File DummyFile.txt does not exist")]
         public void MustThrowExceptionWhenSpecifyingNonExistentFile()
         {
             string lblFile = "DummyFile.txt"; 
 
             labeller.LabelPrefixFile = lblFile;
 
-            labeller.Generate(SuccessfulResult("1.3.4.35"));
+            Assert.Throws(Is.AssignableFrom<ConfigurationException>().And.Message.EqualTo("File DummyFile.txt does not exist")
+                , () => labeller.Generate(SuccessfulResult("1.3.4.35")));
         }
 
 
         [Test]
-        [ExpectedException(ExpectedMessage = "No valid prefix data found in file : thelabelprefix.txt")]
         public void MustThrowExceptionWhenContentsOfLabelPrefixFileDoesNotMatchLabelPrefixsFileSearchPattern()
         {
             string lblFile = "thelabelprefix.txt";
@@ -282,7 +282,8 @@ namespace ThoughtWorks.CruiseControl.UnitTests.Core.Label
             labeller.LabelPrefixFile = lblFile;
             labeller.LabelPrefixsFileSearchPattern = @"\d+\.\d+\.\d+\.";
 
-            labeller.Generate(SuccessfulResult("1.3.4.35"));
+            Assert.Throws(Is.AssignableFrom<ConfigurationException>().And.Message.EqualTo("No valid prefix data found in file : thelabelprefix.txt"),
+                new TestDelegate(() => labeller.Generate(SuccessfulResult("1.3.4.35"))));
         }
 
 	}
