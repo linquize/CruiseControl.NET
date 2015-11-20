@@ -28,7 +28,7 @@
 	<property name="gendarme.executable"	readonly="true"		value="${path::combine( path::combine(tools.dir, 'Gendarme'), 'gendarme.exe')}" />
 	<property name="ndepend.executable"		readonly="true"		value="${path::combine( path::combine(tools.dir, 'NDepend'), 'NDepend.Console.exe')}" />
 	<property name="fxcop.executable"		readonly="true"		value="${path::combine( path::combine(tools.dir, 'FxCop'), 'FxCopCmd.exe')}" />
-	<property name="nunit.executable"		readonly="true"		value="${path::combine( path::combine(tools.dir, 'NUnit'), 'nunit-console-x86.exe')}" />
+	<property name="nunit.executable"		readonly="true"		value="${path::combine( path::combine(tools.dir, 'NUnit'), 'nunit3-console.exe')}" />
 	<property name="nsis.executable"		readonly="true"		value="${path::combine( path::combine(tools.dir, 'NSIS'), 'makensis.exe')}" />
 
 	<!-- common assembly info properties -->
@@ -207,10 +207,11 @@
 			</environment>
 		</nunitTest>
 -->
-		<exec program="${nunit.executable}" >
+		<exec program="${nunit.executable}" workingdir="${path::combine(build.dir, 'UnitTests')}">
                         <arg value="${path::combine( path::combine(build.dir, 'UnitTests'), 'ThoughtWorks.CruiseControl.UnitTests.dll')}" />
                         <arg value="/result=${path::combine(build.metrics.dir, 'nunit-result.xml')}" />
-                        <arg value="/exclude=Integration" />
+						<arg value="/where:&quot;cat != Integration&quot;" />
+						<arg value="/x86" />
 						<arg value="/framework:v4.0" />
         </exec>
  
