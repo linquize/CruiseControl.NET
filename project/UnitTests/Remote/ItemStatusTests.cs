@@ -155,7 +155,7 @@ using NUnit.Framework;
                     "</childItem>" + 
                 "</childItems>" + 
                 "</itemStatus>";
-            Assert.AreEqual(expected, xml);
+            CustomAssertion.AssertEqualsXml(expected, xml);
         }
 
         [Test]

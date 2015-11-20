@@ -29,7 +29,7 @@
                 request.Identifier,
                 request.SourceName,
                 request.Timestamp);
-            Assert.AreEqual(expected, actual);
+            CustomAssertion.AssertEqualsXml(expected, actual);
         }
 
         [Test]
@@ -54,7 +54,7 @@
                 request.SessionToken,
                 request.Timestamp,
                 request.UserName);
-            Assert.AreEqual(expected, actual);
+            CustomAssertion.AssertEqualsXml(expected, actual);
         }
     }
 }

@@ -51,7 +51,7 @@ namespace ThoughtWorks.CruiseControl.UnitTests.Remote.Messages
                 "timestamp=\"{1:yyyy-MM-ddTHH:mm:ss.FFFFFFFzzz}\" result=\"{0}\" />",
                 response.Result,
                 response.Timestamp);
-            Assert.AreEqual(expected, actual);
+            CustomAssertion.AssertEqualsXml(expected, actual);
         }
 
         [Test]
@@ -101,7 +101,7 @@ namespace ThoughtWorks.CruiseControl.UnitTests.Remote.Messages
                 projectStatus.NextBuildTime,
                 DateTime.MinValue,
                 Environment.MachineName);
-            Assert.AreEqual(expected, actual);
+            CustomAssertion.AssertEqualsXml(expected, actual);
         }
     }
 }

@@ -109,7 +109,7 @@ namespace ThoughtWorks.CruiseControl.UnitTests.Remote.Messages
                 "timestamp=\"{1:yyyy-MM-ddTHH:mm:ss.FFFFFFFzzz}\" result=\"{0}\" />",
                 response.Result,
                 response.Timestamp);
-            Assert.AreEqual(expected, actual);
+            CustomAssertion.AssertEqualsXml(expected, actual);
         }
 
         [Test]
@@ -130,7 +130,7 @@ namespace ThoughtWorks.CruiseControl.UnitTests.Remote.Messages
                 response.RequestIdentifier,
                 response.Result,
                 response.Timestamp);
-            Assert.AreEqual(expected, actual);
+            CustomAssertion.AssertEqualsXml(expected, actual);
         }
     }
 }

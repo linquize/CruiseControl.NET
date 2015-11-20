@@ -55,7 +55,7 @@
                 "timestamp=\"{1:yyyy-MM-ddTHH:mm:ss.FFFFFFFzzz}\" result=\"{0}\" />",
                 response.Result,
                 response.Timestamp);
-            Assert.AreEqual(expected, actual);
+            CustomAssertion.AssertEqualsXml(expected, actual);
         }
 
         [Test]
@@ -79,7 +79,7 @@
                 response.Result,
                 response.Timestamp,
                 response.Data[0]);
-            Assert.AreEqual(expected, actual);
+            CustomAssertion.AssertEqualsXml(expected, actual);
         }
     }
 }

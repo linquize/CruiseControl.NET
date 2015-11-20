@@ -184,6 +184,10 @@
     <Reference Include="System.Xml.Linq">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
     </Reference>
+    <Reference Include="xmlunit-core">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Tools\XMLUnit\xmlunit-core.dll</HintPath>
+    </Reference>
     <ProjectReference Include="..\CCTrayLib\CCTrayLib.csproj">
       <Name>CCTrayLib</Name>
       <Project>{C8043AD9-0F30-4366-A263-E2FC0D6A57A9}</Project>

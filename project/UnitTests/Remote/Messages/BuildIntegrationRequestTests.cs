@@ -66,7 +66,7 @@
                 request.SourceName,
                 request.Timestamp,
                 request.BuildCondition);
-            Assert.AreEqual(expected, actual);
+            CustomAssertion.AssertEqualsXml(expected, actual);
         }
 
         [Test]
@@ -93,7 +93,7 @@
                 request.Timestamp,
                 request.ProjectName,
                 request.BuildCondition);
-            Assert.AreEqual(expected, actual);
+            CustomAssertion.AssertEqualsXml(expected, actual);
         }
     }
 }

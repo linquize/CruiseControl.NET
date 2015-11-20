@@ -26,7 +26,7 @@ namespace ThoughtWorks.CruiseControl.UnitTests.Remote.Messages
                 request.SourceName,
                 request.Timestamp,
                 "<kind>NotDefined</kind>");
-            Assert.AreEqual(expected, actual);
+            CustomAssertion.AssertEqualsXml(expected, actual);
         }
 
         [Test]
@@ -53,7 +53,7 @@ namespace ThoughtWorks.CruiseControl.UnitTests.Remote.Messages
                 request.Timestamp,
                 request.ProjectName,
                 request.Message);
-            Assert.AreEqual(expected, actual);
+            CustomAssertion.AssertEqualsXml(expected, actual);
         }
     }
 }

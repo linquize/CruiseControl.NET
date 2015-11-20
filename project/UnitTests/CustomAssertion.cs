@@ -4,6 +4,7 @@ using System.Text.RegularExpressions;
 using System.Xml;
 using System.Xml.XPath;
 using NUnit.Framework;
+using Org.XmlUnit.Builder;
 
 namespace ThoughtWorks.CruiseControl.UnitTests
 {
@@ -132,6 +133,11 @@ namespace ThoughtWorks.CruiseControl.UnitTests
 			{
 				throw new AssertionException(string.Format(System.Globalization.CultureInfo.CurrentCulture,"Unable to parse xml <{0}> or xpath expression <{1}>\n\t{2}", xml, xpath, e), e);
 			}
+		}
+
+		public static void AssertEqualsXml(string expected, string actual)
+		{
+			Assert.False(DiffBuilder.Compare(expected).WithTest(actual).CheckForIdentical().Build().HasDifferences());
 		}
 	}
 }

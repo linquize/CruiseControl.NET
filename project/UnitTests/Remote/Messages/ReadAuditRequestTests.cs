@@ -28,7 +28,7 @@ namespace ThoughtWorks.CruiseControl.UnitTests.Remote.Messages
                 request.Identifier,
                 request.SourceName,
                 request.Timestamp);
-            Assert.AreEqual(expected, actual);
+            CustomAssertion.AssertEqualsXml(expected, actual);
         }
 
         [Test]
@@ -55,7 +55,7 @@ namespace ThoughtWorks.CruiseControl.UnitTests.Remote.Messages
                 request.Timestamp,
                 request.StartRecord,
                 request.NumberOfRecords);
-            Assert.AreEqual(expected, actual);
+            CustomAssertion.AssertEqualsXml(expected, actual);
         }
     }
 }

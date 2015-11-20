@@ -40,7 +40,7 @@
                 DateTime.Today);
             object result = XmlConversionUtil.ConvertXmlToObject(typeof(Response), xml);
             Assert.That(result, Is.InstanceOf<Response>());
-            Assert.AreEqual(xml, result.ToString());
+            CustomAssertion.AssertEqualsXml(xml, result.ToString());
         }
         #endregion
 
@@ -67,7 +67,7 @@
                 DateTime.Today);
             object result = XmlConversionUtil.ProcessResponse(xml);
             Assert.That(result, Is.InstanceOf<Response>());
-            Assert.AreEqual(xml, result.ToString());
+            CustomAssertion.AssertEqualsXml(xml, result.ToString());
         }
 
         [Test]
